@@ -1,6 +1,7 @@
-from flask import Blueprint
-
-commands = Blueprint('commands', __name__)
+import os
 
 
-
+def sample_process():
+    print('[start] sample_process...')
+    print('[end] sample_process...')
+    return
