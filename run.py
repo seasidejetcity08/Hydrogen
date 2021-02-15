@@ -1,7 +1,10 @@
 from flask import Flask
+from controllers import commands
 
 app = Flask(__name__, template_folder='templates', static_folder='static')
 app.config['JSON_AS_ASCII'] = False
+
+app.register_blueprint(commands)
 
 if __name__ == '__main__':
     host = '0.0.0.0'
