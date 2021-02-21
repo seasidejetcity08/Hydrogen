@@ -4,9 +4,11 @@ import time
 from utils import ProcessManager
 
 
+process_key = None
+
 def kick_process():
     process_manager = ProcessManager.new()
-    pid = process_manager.kick(chile_process)
+    process_key = 
     return
 
 def chile_process(args):
