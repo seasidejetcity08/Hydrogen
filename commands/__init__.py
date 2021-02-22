@@ -1,1 +1,1 @@
-from .command import sample_process
+from .command import kick_process

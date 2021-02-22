@@ -1,1 +1,1 @@
-from .commands import commands
+from .commands_index import commands_index

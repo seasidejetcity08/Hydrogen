@@ -1,10 +1,10 @@
 from flask import Flask
-from controllers import commands
+from controllers import commands_index
 
 app = Flask(__name__, template_folder='templates', static_folder='static')
 app.config['JSON_AS_ASCII'] = False
 
-app.register_blueprint(commands)
+app.register_blueprint(commands_index)
 
 if __name__ == '__main__':
     host = '0.0.0.0'

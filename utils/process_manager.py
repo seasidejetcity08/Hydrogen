@@ -3,10 +3,13 @@ from uuid import uuid4
 
 
 class ProcessManager(object):
-    def __init__(self):
-        self.__pid = None
+    def __init__(self, is_use_pipe=False):
+        self.__process = None
+        self.__is_use_pipe = False
         self.__parent_conn = None
         self.__child_conn = None
+        if is_use_pipe == True:
+            self.__create_pipe()
 
     @property
     def parent_conn(self):
@@ -16,23 +19,28 @@ class ProcessManager(object):
     def child_conn(self):
         return self.__child_conn
 
-    def __create_pipe(self, key):
+    def __create_pipe(self):
         self.__parent_conn, self.__child_conn = Pipe()
+        self.__is_use_pipe = True
 
-    def kick(self, target, args=None):
-        process = Process(target=target, args=args)
-        process.start()
-        self.__pid = process.pid
+    def kick(self, target, args={}):
+        if self.__is_use_pipe == True:
+            args["child_conn"] = self.child_conn
+        self.__process = Process(target=target, args=args)
+        self.__process.start()
+        # pipe test[Start]
+        bean = {}
+        bean["Data1"] = "Data1"
+        self.parent_conn(bean)
+        # pipe test[End]
         return self.__pid
 
-    def exitcode(self, pid):
-        process = self.__processes[pid]
-        if process is None:
-            return None
-        return process.exitcode()
-
     def is_alive(self, pid):
-        process = self.__processes[pid]
-        if process is None:
+        if self.__process is None:
             return False
-        return process.is_alive()
+        return self.__process.is_alive()
+
+    def exitcode(self, pid):
+        if self.__process is None:
+            return None
+        return self.__process.exitcode()

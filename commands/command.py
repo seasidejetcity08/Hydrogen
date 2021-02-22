@@ -1,20 +1,24 @@
-from multiprocessing import Process
 import time
 
 from utils import ProcessManager
 
 
-process_key = None
+process_manager = None
 
 def kick_process():
-    process_manager = ProcessManager.new()
-    process_key = 
+    global process_manager
+    process_manager = ProcessManager(is_use_pipe=True)
+    process_manager.kick(target=chile_process)
     return
 
 def chile_process(args):
-    end_flag = True
-    while end_flag:
-        time.sleep(1)
+    is_exit = False
+    sleep_time = 1
+    child_conn = args["child_conn"]
+    while is_exit == False:
+        time.sleep(sleep_time)
+        bean = child_conn.recv()
+        print("[child] Data1 : " + bean["Data1"])
+        
 
-def cdsjkhlh_fajhl (self):
-    return
+# API's
