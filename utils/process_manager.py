@@ -24,14 +24,14 @@ class ProcessManager(object):
         self.__is_use_pipe = True
 
     def kick(self, target, args={}):
-        if self.__is_use_pipe == True:
+        if self.child_conn is not None:
             args["child_conn"] = self.child_conn
-        self.__process = Process(target=target, args=args)
+        self.__process = Process(target=target, args=(args,))
         self.__process.start()
         # pipe test[Start]
         bean = {}
         bean["Data1"] = "Data1"
-        self.parent_conn(bean)
+        self.parent_conn.send(bean)
         # pipe test[End]
         return self.__pid
 
