@@ -16,3 +16,17 @@ def kick_process():
     commands.kick_process()
     print('[end] kick process...')
     return "", 200
+
+@commands_index.route('/get_status')
+def get_status():
+    print('[start] get status...')
+    commands.get_status()
+    print('[end] get status...')
+    return "", 200
+
+@commands_index.route('/stop_process')
+def stop_process():
+    print('[start] stop process...')
+    commands.exit_process()
+    print('[end] stop process...')
+    return "", 200

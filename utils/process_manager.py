@@ -28,19 +28,22 @@ class ProcessManager(object):
             args["child_conn"] = self.child_conn
         self.__process = Process(target=target, args=(args,))
         self.__process.start()
-        # pipe test[Start]
-        bean = {}
-        bean["Data1"] = "Data1"
-        self.parent_conn.send(bean)
-        # pipe test[End]
-        return self.__pid
+        #self.parent_conn.send({
+        #    "hoge": "hoge"
+        #})
+        return
 
-    def is_alive(self, pid):
+    def is_alive(self):
         if self.__process is None:
             return False
         return self.__process.is_alive()
 
-    def exitcode(self, pid):
+    def exitcode(self):
         if self.__process is None:
             return None
         return self.__process.exitcode()
+
+    def send_packet(self, packet):
+        if packet is not None:
+            if self.parent_conn is not None:
+                self.parent_conn.send(packet)
